@@ -8,8 +8,22 @@ function debounce(func, wait) {
       func.apply(this, args);
     }, wait);
   }
-  
 }
+
+// using .bind() is actually not recommeded ?
+// 1. .bind() returns/creates a new function everytime which is un-necessary 
+function debounceUsingBind(func, wait) {
+  let timer;
+
+  return function(...args) {
+    // clear previous timer
+    clearTimeout(timer);
+
+    timer = setTimeout(func.bind(this, ...args), wait)
+  }
+}
+
+
 // Example usage:
 const processChanges = (changes) => {
   console.log('Processing changes:', changes);
